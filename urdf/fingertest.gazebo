@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<robot name="fingertest">
+
+<gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so">
+    <robotNamespace>/fingertest</robotNamespace>
+    <robotSimType>gazebo_ros_control/DefaultRobotHWSim</robotSimType>
+    <legacyModeNS>true</legacyModeNS>
+    </plugin>
+</gazebo>
+
+ <gazebo reference="base_link">
+ <material>Gazebo/White</material>
+<selfCollide>false</selfCollide>
+ </gazebo>
+
+ <gazebo reference="Link_1">
+ <material>Gazebo/White</material>
+ <selfCollide>false</selfCollide>
+ </gazebo>
+
+ <gazebo reference="Link_2">
+ <material>Gazebo/White</material>
+ <selfCollide>false</selfCollide>
+ </gazebo>
+ 
+ <gazebo reference="Link_3">
+ <material>Gazebo/White</material>
+ <selfCollide>false</selfCollide>
+ </gazebo>
+</robot>
