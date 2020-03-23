@@ -2,12 +2,11 @@
 <!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
      Commit Version: 1.5.1-0-g916b5db  Build Version: 1.5.7152.31018
      For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
-<robot name="fingertest" xmlns:xacro="http://ros.org/wiki/xacro">
-  
-  <include filename="$(find fingertest)/urdf/fingertest.gazebo"/>
-  
+  <robot name="fingertest" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find fingertest)/urdf/fingertest.gazebo"/>
+  <xacro:macro name="fingertest" params="parent child side *origin">
   <link
-    name="base_link">
+    name="${side}_base_link">
     <inertial>
       <origin
         xyz="-0.01 0.00 0.04"
@@ -47,7 +46,7 @@
     </collision>
   </link>
   <link
-    name="Link_1">
+    name="${side}_Link_1">
     <inertial>
       <origin
         xyz="0 -0.01 0.02"
@@ -88,15 +87,13 @@
   </link>
 
   
-  <link name="world"/>
-  <joint name="fixed456" type="fixed">
-    <origin
-      xyz="0 0 0"
-      rpy="0 0 0" />
+  <!-- <link name="world"/> -->
+  <joint name="${side}_fixed456" type="fixed">
+    <xacro:insert_block name="origin" />
     <parent
-      link="world" />
+      link="${parent}" />
     <child
-      link="base_link" />
+      link="${side}_base_link" />
     <axis
       xyz="0 0 0" />
   </joint>
@@ -104,20 +101,20 @@
  
   
   <joint
-    name="Joint1"
+    name="${side}_Joint1"
     type="continuous">
     <origin
       xyz="-0.0165 0 0.0301"
       rpy="0 -0.5235 0" />
     <parent
-      link="base_link" />
+      link="${side}_base_link" />
     <child
-      link="Link_1" />
+      link="${side}_Link_1" />
     <axis
       xyz="0 -1 0" />
   </joint>
   <link
-    name="Link_2">
+    name="${side}_Link_2">
     <inertial>
       <origin
         xyz="0 -0.01 0.01"
@@ -157,20 +154,20 @@
     </collision>
   </link>
   <joint
-    name="Joint2"
+    name="${side}_Joint2"
     type="continuous">
     <origin
       xyz="0 0 0.05715"
       rpy="0 0 0" />
     <parent
-      link="Link_1" />
+      link="${side}_Link_1" />
     <child
-      link="Link_2" />
+      link="${side}_Link_2" />
     <axis
       xyz="0 -1 0" />
   </joint>
   <link
-    name="Link_3">
+    name="${side}_Link_3">
     <inertial>
       <origin
         xyz="-0.02 0.01 0.00"
@@ -210,46 +207,48 @@
     </collision>
   </link>
   <joint
-    name="Joint3"
+    name="${side}_Joint3"
     type="continuous">
     <origin
       xyz="0 0 0.0381"
       rpy="0 0.5235 0" />
     <parent
-      link="Link_2" />
+      link="${side}_Link_2" />
     <child
-      link="Link_3" />
+      link="${side}_Link_3" />
     <axis
       xyz="0 -1 0" />
   </joint>
-  <transmission name="tran1">
+  <transmission name="${side}_tran1">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="Joint1">
+    <joint name="${side}_Joint1">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor1">
+    <actuator name="${side}_motor1">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-    <transmission name="tran2">
+    <transmission name="${side}_tran2">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="Joint2">
+    <joint name="${side}_Joint2">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor2">
+    <actuator name="${side}_motor2">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
-    <transmission name="tran3">
+    <transmission name="${side}_tran3">
     <type>transmission_interface/SimpleTransmission</type>
-    <joint name="Joint3">
+    <joint name="${side}_Joint3">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
     </joint>
-    <actuator name="motor3">
+    <actuator name="${side}_motor3">
       <hardwareInterface>hardware_interface/EffortJointInterface</hardwareInterface>
       <mechanicalReduction>1</mechanicalReduction>
     </actuator>
   </transmission>
+  <xacro:fingertest_gazebo side="${side}"/>
+  </xacro:macro>
 </robot>
